@@ -1,0 +1,19 @@
+---
+layout: base.njk
+title: Feeds
+---
+
+{# <ul>
+{% for item in collections.items %}
+<li>{{ item.data.new }} - {{ item.data.title }}</li>
+{% endfor %}
+</ul> #}
+
+{% for category in feeds %}
+  <h2><a href="/category/{{ category.category | slug }}/">{{ category.category }}</a></h2>
+  <ul class="grid">
+    {% for feed in category.items %}
+      {% include "sourceCard.njk" %}
+    {% endfor %}
+  </ul>
+{% endfor %}

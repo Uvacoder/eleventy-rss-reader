@@ -1,0 +1,41 @@
+{
+  "name": "11ty-rss-reader",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "watch:sass": "sass  --no-source-map --watch src/sass:public/css",
+    "watch:eleventy": "eleventy --serve",
+    "build:sass": "sass  --no-source-map src/sass:public/css",
+    "build:eleventy": "eleventy",
+    "css": "postcss public/css/*.css -u autoprefixer cssnano -r --no-map",
+    "lastaccess": "node app/lastAccessed.js",
+    "prestart": "cross-env ELEVENTY_ENV=dev npm run lastaccess",
+    "postbuild": "cross-env ELEVENTY_ENV=prod npm-run-all --parallel css lastaccess",
+    "start": "npm-run-all build:sass --parallel watch:*",
+    "build": "npm-run-all build:sass build:eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/5t3ph/11ty-sass-skeleton.git"
+  },
+  "author": "5t3ph",
+  "license": "ISC",
+  "dependencies": {
+    "@11ty/eleventy": "^0.12.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.6",
+    "autoprefixer": "^10.2.6",
+    "cross-env": "^7.0.3",
+    "cssnano": "^5.0.6",
+    "dotenv": "^10.0.0",
+    "feedparser": "^2.2.10",
+    "node-fetch": "^2.6.1",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.3.5",
+    "postcss-cli": "^8.3.1",
+    "sass": "^1.35.1"
+  },
+  "browserslist": [
+    "last 2 versions"
+  ]
+}

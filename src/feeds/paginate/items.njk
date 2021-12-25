@@ -1,0 +1,42 @@
+---js
+{
+  pagination: {
+    data: "feeds",
+    size: 1,
+    alias: "item",
+    addAllPagesToCollections: true,
+    before: function(data) {
+      const feedItems = [];
+
+      for (const category of data) {
+        for (const source of category.items) {
+          for (const item of source.items) {
+            feedItems.push(item);
+          }
+        }
+      }
+
+      return feedItems;
+    }
+  },
+  layout: "base.njk",
+  tags: "items",
+  permalink: "/{{ item.feedTitle | slug }}/{{ item.title | slug }}/",
+  templateEngineOverride: "md, njk",
+  eleventyComputed: {
+    title: "{{ item.title }}",
+    new: "{{ item.new }}",
+    source: "{{ item.feedTitle }}",
+    link: "{{ item.link }}",
+    category: "{{ item.category }}",
+    siteUrl: "{{ item.siteUrl }}"
+  }
+}
+---
+<article class="container item-article background-light">
+{% if item.content %}
+{{ item.content | stripUnsafe | safe }}
+{% else %}
+<p><em>No content found</em> - <strong><a href="{{ link }}">view <span class="inclusively-hidden">{{ title }}</span> on {{ item.siteUrl | domain }}</a></strong></p>
+{% endif %}
+</article>
